@@ -677,7 +677,7 @@ const BONUS_TOPICS = [
    COMPONENT
    ============================================================ */
 
-export default function InfosysQuestionBank() {
+export default function InfosysQuestionBank({ onLogout }) {
   const [activeId, setActiveId] = useState(SECTIONS[0].id);
   const [search, setSearch] = useState("");
   const [openIdx, setOpenIdx] = useState(null);
@@ -707,16 +707,27 @@ export default function InfosysQuestionBank() {
     <div style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }} className="min-h-screen bg-[#F7F5F0] text-[#1B1B1B]">
       {/* Header */}
       <div className="bg-[#1F3864] text-white">
-        <div className="max-w-5xl mx-auto px-6 py-6">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-[#C9B98A] font-sans mb-1">
-            Vignan's Lara Institute of Technology &amp; Science
-          </p>
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-            Infosys Off-Campus 2026
-          </h1>
-          <p className="text-[#D6DCEB] mt-1 font-sans text-sm">
-            Complete Model Question Bank — 7 Sections, {totalQs}+ Questions
-          </p>
+        <div className="max-w-5xl mx-auto px-6 py-6 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[11px] tracking-[0.2em] uppercase text-[#C9B98A] font-sans mb-1">
+              Vignan's Lara Institute of Technology &amp; Science
+            </p>
+            <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+              Infosys Off-Campus 2026
+            </h1>
+            <p className="text-[#D6DCEB] mt-1 font-sans text-sm">
+              Complete Model Question Bank — 7 Sections, {totalQs}+ Questions
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={onLogout}
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+          >
+            <X size={14} />
+            Logout
+          </button>
         </div>
       </div>
 

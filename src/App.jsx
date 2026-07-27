@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuestionBank from '../InfosysQuestionBank (1).jsx';
 
 const AUTH_USER = 'Student';
 const AUTH_PASSWORD = 'student@123';
-const AUTH_KEY = 'infosys-question-bank-authenticated';
 
 function LoginScreen({ onLogin, error }) {
 	const [username, setUsername] = useState('');
@@ -107,33 +106,34 @@ function LoginScreen({ onLogin, error }) {
 }
 
 export default function App() {
-	const [isAuthenticated, setIsAuthenticated] = useState(() => sessionStorage.getItem(AUTH_KEY) === 'true');
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [loginError, setLoginError] = useState('');
 
 	useEffect(() => {
 		document.body.style.background = '#07111f';
 	}, []);
 
-	const handleLogin = useMemo(
-		() => (username, password) => {
-			const normalizedUser = username.trim();
-			const normalizedPassword = password;
+	const handleLogin = (username, password) => {
+		const normalizedUser = username.trim();
+		const normalizedPassword = password;
 
-			if (normalizedUser === AUTH_USER && normalizedPassword === AUTH_PASSWORD) {
-				sessionStorage.setItem(AUTH_KEY, 'true');
-				setLoginError('');
-				setIsAuthenticated(true);
-				return;
-			}
+		if (normalizedUser === AUTH_USER && normalizedPassword === AUTH_PASSWORD) {
+			setLoginError('');
+			setIsAuthenticated(true);
+			return;
+		}
 
-			setLoginError('Invalid username or password.');
-		},
-		[]
-	);
+		setLoginError('Invalid username or password.');
+	};
+
+	const handleLogout = () => {
+		setIsAuthenticated(false);
+		setLoginError('');
+	};
 
 	if (!isAuthenticated) {
 		return <LoginScreen onLogin={handleLogin} error={loginError} />;
 	}
 
-	return <QuestionBank />;
+	return <QuestionBank onLogout={handleLogout} />;
 }
