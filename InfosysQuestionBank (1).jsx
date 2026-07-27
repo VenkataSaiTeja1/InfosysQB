@@ -855,9 +855,17 @@ export default function InfosysQuestionBank() {
               key={key}
               className="bg-white rounded-lg border border-[#E3DFD3] overflow-hidden"
             >
-              <button
+              <div
+                role="button"
+                tabIndex={0}
                 onClick={() => setOpenIdx(isOpen ? null : key)}
-                className="w-full flex items-start gap-3 text-left px-4 py-3.5"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setOpenIdx(isOpen ? null : key);
+                  }
+                }}
+                className="w-full flex items-start gap-3 text-left px-4 py-3.5 cursor-pointer"
               >
                 <button
                   onClick={(e) => toggleDone(key, e)}
@@ -894,7 +902,7 @@ export default function InfosysQuestionBank() {
                   size={16}
                   className={`shrink-0 mt-1 text-[#9B9483] transition-transform ${isOpen ? "rotate-180" : ""}`}
                 />
-              </button>
+              </div>
 
               {isOpen && (
                 <div className="px-4 pb-4 pt-1 border-t border-[#F0EEE6]">
